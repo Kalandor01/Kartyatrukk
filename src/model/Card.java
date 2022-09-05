@@ -17,10 +17,14 @@ public class Card
     public Card_types getType() {
         return type;
     }
+    
+    public String getImage() {
+        return "imgs/" + symbol + "/" + type + ".png";
+    }
 
     @Override
     public String toString() {
         return symbol + " " + type;
     }
-    
+
 }

@@ -120,6 +120,10 @@ public class Deck_manager
         return shuffles_neded;
     }
 
+    public void setShuffled(int shuffled) {
+        this.shuffled = shuffled;
+    }
+
     @Override
     public String toString() {
         return "Deck_manager{" + "card_num=" + card_num + ", columns=" + columns + ", shuffled=" + shuffled + ", shuffles_neded=" + shuffles_neded + '}';

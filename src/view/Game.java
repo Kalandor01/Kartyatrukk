@@ -1,11 +1,13 @@
 package view;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.Deck_manager;
 
 public class Game extends javax.swing.JFrame
 {
-    Deck_manager deck = new Deck_manager(27, 3);
+    Deck_manager deck = new Deck_manager(21, 3);
     int rows = deck.getCard_num() / deck.getColumns();
 
     public Game() {
@@ -37,7 +39,16 @@ public class Game extends javax.swing.JFrame
                 javax.swing.JPanel card = new javax.swing.JPanel();
                 card.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 javax.swing.JLabel card_text = new javax.swing.JLabel();
-                card_text.setText(deck.getCard(x, y).toString());
+                //set image
+                try
+                {
+                    ImageIcon img_raw = new ImageIcon(this.getClass().getResource(deck.getCard(x, y).getImage()));
+                    ImageIcon img = new ImageIcon(img_raw.getImage().getScaledInstance(120, 50, Image.SCALE_DEFAULT));
+                    card_text.setIcon(img);
+                } catch (Exception e)
+                {
+                    card_text.setText(deck.getCard(x, y).toString());
+                }
                 card.add(card_text);
                 c_cards.add(card);
             }
@@ -45,6 +56,7 @@ public class Game extends javax.swing.JFrame
             //make button
             javax.swing.JButton button = new javax.swing.JButton();
             button.setText("This column!");
+            button.setToolTipText("This column!");
             int col = x;
             button.addActionListener((java.awt.event.ActionEvent evt) -> {
                 choice(col);
@@ -65,7 +77,8 @@ public class Game extends javax.swing.JFrame
         if(deck.getShuffled() == deck.getShuffles_neded())
         {
             System.out.println("Win!");
-            JOptionPane.showMessageDialog(this, deck.getCard((int)(deck.getColumns() / 2), (int)(rows / 2)), "You win!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, deck.getCard((int)(deck.getColumns() / 2), (int)(rows / 2)).toString().replace("N_", " ").toLowerCase(), "You win!", JOptionPane.INFORMATION_MESSAGE);
+            deck.setShuffled(0);
         }
     }
 
@@ -104,9 +117,9 @@ public class Game extends javax.swing.JFrame
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap()
                 .addComponent(cards_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(456, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
         );
 
         pack();
